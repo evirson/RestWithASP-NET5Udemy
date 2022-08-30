@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace EstudoRest.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     public class CalculadoraController : ControllerBase
     {
         private readonly ILogger<CalculadoraController> _logger;
