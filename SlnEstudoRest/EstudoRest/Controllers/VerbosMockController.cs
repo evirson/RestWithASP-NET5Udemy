@@ -14,7 +14,23 @@ namespace EstudoRest.Controllers
             _logger = logger;
         }
 
+        [HttpGet]
+        public IActionResult findAll()
+        {
 
+
+            return Ok("deu boa");
+
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult findById(int id)
+        {
+
+
+            return Ok(id.ToString());
+
+        }
 
 
     }
