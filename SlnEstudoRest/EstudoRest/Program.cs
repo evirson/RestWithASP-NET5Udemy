@@ -1,5 +1,7 @@
 using EstudoRest.Services.Implementations;
 using EstudoRest.Services;
+using EstudoRest.Model.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
+
+var connection = builder.Configuration["SqlConnection:SqlConnectionString"];
+
+builder.Services.AddDbContext<SqlContext>(options => options.UseSqlServer(connection));
+   
 builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
 
 
