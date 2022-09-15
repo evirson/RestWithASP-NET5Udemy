@@ -5,7 +5,7 @@ namespace EstudoRest.Model
     [Table("person")]
     public class Person
     {
-        [Column("id")]
+        [Column("id")]        
         public long Id { get; set; }
 
         [Column("first_name")]

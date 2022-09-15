@@ -12,6 +12,7 @@ namespace EstudoRest.Model.Context
 
         public SqlContext(DbContextOptions<SqlContext> options) : base(options)
         {
+            
 
         }
 

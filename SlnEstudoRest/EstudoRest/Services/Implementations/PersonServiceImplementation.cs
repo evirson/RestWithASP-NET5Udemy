@@ -1,10 +1,17 @@
 ﻿using EstudoRest.Model;
+using EstudoRest.Model.Context;
 
 namespace EstudoRest.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private volatile int count;
+        private SqlContext _context;
+
+        public PersonServiceImplementation(SqlContext context)
+        {
+            _context = context;
+
+        }
 
         public Person Create(Person person)
         {
@@ -17,7 +24,7 @@ namespace EstudoRest.Services.Implementations
             
         }
 
-        public List<Person> FindAll()
+        public List<Person> FindAllMock()
         {
             List<Person> persons = new List<Person>();
             for (int i = 0;i < 8; i++) 
@@ -27,6 +34,11 @@ namespace EstudoRest.Services.Implementations
             }
 
             return persons;
+        }
+
+        public List<Person> FindAll()
+        {
+            return _context.Persons.ToList();
         }
 
         private Person MockPerson(int i)
