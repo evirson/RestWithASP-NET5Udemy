@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 
 var connection = builder.Configuration["SqlConnection:SqlConnectionString"];
 
-builder.Services.AddDbContext<SqlContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<SqlContext>(options => options.UseMySql(connection));
    
 builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
 
