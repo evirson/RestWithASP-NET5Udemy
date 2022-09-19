@@ -1,6 +1,5 @@
 ﻿using EstudoRest.Model;
 using EstudoRest.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EstudoRest.Controllers
@@ -25,7 +24,7 @@ namespace EstudoRest.Controllers
         {
 
 
-            return Ok(_personService.FindAll());    
+            return Ok(_personService.FindAll());
 
         }
 

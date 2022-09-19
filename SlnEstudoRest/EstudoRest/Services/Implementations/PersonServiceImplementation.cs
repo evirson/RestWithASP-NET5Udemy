@@ -5,9 +5,11 @@ namespace EstudoRest.Services.Implementations
 {
     public class PersonServiceImplementation : IPersonService
     {
-        private SqlContext _context;
+        private MySQLContext _context;
 
-        public PersonServiceImplementation(SqlContext context)
+        private volatile int count;
+
+        public PersonServiceImplementation(MySQLContext context)
         {
             _context = context;
 
@@ -15,19 +17,19 @@ namespace EstudoRest.Services.Implementations
 
         public Person Create(Person person)
         {
-            
+
             return person;
         }
 
         public void Delete(long id)
         {
-            
+
         }
 
         public List<Person> FindAllMock()
         {
             List<Person> persons = new List<Person>();
-            for (int i = 0;i < 8; i++) 
+            for (int i = 0; i < 8; i++)
             {
                 Person person = MockPerson(i);
                 persons.Add(person);
@@ -75,7 +77,7 @@ namespace EstudoRest.Services.Implementations
         public Person Update(Person person)
         {
             return person;
-           
+
         }
     }
 }

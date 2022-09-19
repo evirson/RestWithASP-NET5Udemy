@@ -14,9 +14,9 @@ namespace EstudoRest.Controllers
         }
 
         [HttpGet("soma/{firstNumber}/{secondNumber}")]
-        public  IActionResult Get(string firstNumber, string secondNumber)
+        public IActionResult Get(string firstNumber, string secondNumber)
         {
-            if(IsNumeric(firstNumber) && IsNumeric(secondNumber))
+            if (IsNumeric(firstNumber) && IsNumeric(secondNumber))
             {
                 var soma = ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber);
 
@@ -24,7 +24,7 @@ namespace EstudoRest.Controllers
             }
 
             return BadRequest("Entrada Inválida");
-        
+
         }
 
         private decimal ConvertToDecimal(string strNumber)
@@ -35,7 +35,7 @@ namespace EstudoRest.Controllers
             {
                 return decimalValue;
             }
-                        
+
             return 0;
         }
 
@@ -43,7 +43,7 @@ namespace EstudoRest.Controllers
         {
             double numero;
 
-            bool isNumber = double.TryParse(strNumber, System.Globalization.NumberStyles.Any, 
+            bool isNumber = double.TryParse(strNumber, System.Globalization.NumberStyles.Any,
                                             System.Globalization.NumberFormatInfo.InvariantInfo,
                                             out numero);
 

@@ -2,17 +2,17 @@
 
 namespace EstudoRest.Model.Context
 {
-    public class SqlContext : DbContext
+    public class MySQLContext : DbContext
     {
 
-        public SqlContext()
+        public MySQLContext()
         {
 
         }
 
-        public SqlContext(DbContextOptions<SqlContext> options) : base(options)
+        public MySQLContext(DbContextOptions<MySQLContext> options) : base(options)
         {
-            
+
 
         }
 
