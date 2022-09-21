@@ -14,7 +14,7 @@ namespace EstudoRest.Model
         [Column("last_name")]
         public string LastName { get; set; }
 
-        [Column("adress")]
+        [Column("address")]
         public string Address { get; set; }
 
         [Column("gender")]

@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 
 var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 
-builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, null));
+builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
 builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
 
