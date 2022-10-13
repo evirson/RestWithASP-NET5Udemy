@@ -3,16 +3,16 @@ using EstudoRest.Model.Context;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 
-namespace EstudoRest.Services.Implementations
+namespace EstudoRest.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private MySQLContext _context;
 
         private volatile int count;
 
         
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
 
@@ -62,34 +62,9 @@ namespace EstudoRest.Services.Implementations
 
         }
 
-        public List<Person> FindAllMock()
-        {
-            List<Person> persons = new List<Person>();
-            for (int i = 0; i < 8; i++)
-            {
-                Person person = MockPerson(i);
-                persons.Add(person);
-            }
-
-            return persons;
-        }
-
         public List<Person> FindAll()
         {
             return _context.Persons.ToList();
-        }
-
-        private Person MockPerson(int i)
-        {
-            return new Person
-            {
-                Id = IncrementAndGet(),
-                FirstName = "Evirson" + i,
-                LastName = "Fiorilo" + i,
-                Address = "Curitiba",
-                Gender = "Male"
-
-            };
         }
 
         private long IncrementAndGet()
@@ -131,7 +106,7 @@ namespace EstudoRest.Services.Implementations
 
         }
 
-        private bool Exists(long id )
+        public bool Exists(long id )
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }

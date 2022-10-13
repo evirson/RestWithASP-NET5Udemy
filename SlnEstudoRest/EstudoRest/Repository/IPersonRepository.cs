@@ -1,8 +1,8 @@
 ﻿using EstudoRest.Model;
 
-namespace EstudoRest.Services
+namespace EstudoRest.Repository
 {
-    public interface IPersonService
+    public interface IPersonRepository
     {
         Person Create(Person person);
 
@@ -13,6 +13,8 @@ namespace EstudoRest.Services
         Person Update(Person person);
 
         void Delete(long id);
+
+        bool Exists(long id);
 
 
     }
