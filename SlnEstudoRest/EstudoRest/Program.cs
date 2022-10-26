@@ -4,8 +4,21 @@ using EstudoRest.Business.Implementations;
 using Microsoft.EntityFrameworkCore;
 using EstudoRest.Repository;
 using EstudoRest.Repository.Implementations;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System.Data.Common;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
 
 // Add services to the container.
@@ -16,6 +29,11 @@ var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
+if (builder.Environment.IsDevelopment())
+{
+    MigrateDatabase(connection);
+}
+
 
 //versioning api
 builder.Services.AddApiVersioning();
@@ -25,6 +43,26 @@ builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
 
+void MigrateDatabase(string connection)
+{
+    try
+    {
+        //validar o q fiz aqui, não sei se ficou certo.
+        var evolveConnection = new MySqlConnection(connection);
+        var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
+        {
+            Locations = new List<string> { "db/migrations", "db/dataset" },
+            IsEraseDisabled = true,
+        };
+
+        evolve.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Log.Error("Database migration Failed", ex);
+        throw;
+    }
+}
 
 
 var app = builder.Build();
