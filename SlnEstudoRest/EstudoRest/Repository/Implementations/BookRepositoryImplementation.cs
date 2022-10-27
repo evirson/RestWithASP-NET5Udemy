@@ -5,24 +5,24 @@ using System;
 
 namespace EstudoRest.Repository.Implementations
 {
-    public class PersonRepositoryImplementation : IPersonRepository
+    public class BookRepositoryImplementation : IBookRepository
             {
         private MySQLContext _context;
 
         private volatile int count;
 
         
-        public PersonRepositoryImplementation(MySQLContext context)
+        public BookRepositoryImplementation(MySQLContext context)
         {
             _context = context;
 
         }
 
-        public Person Create(Person person)
+        public Book Create(Book Book)
         {
             try
             {
-                _context.Add(person);
+                _context.Add(Book);
 
                 _context.SaveChanges(); 
 
@@ -33,12 +33,12 @@ namespace EstudoRest.Repository.Implementations
                 throw;
             }
 
-            return person;
+            return Book;
         }
 
         public void Delete(long id)
         {
-            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
+            var result = _context.Books.SingleOrDefault(p => p.Id.Equals(id));
 
             if (result != null)
             {
@@ -47,7 +47,7 @@ namespace EstudoRest.Repository.Implementations
                 try
                 {
 
-                    _context.Persons.Remove(result);
+                    _context.Books.Remove(result);
 
                     _context.SaveChanges();
 
@@ -62,9 +62,9 @@ namespace EstudoRest.Repository.Implementations
 
         }
 
-        public List<Person> FindAll()
+        public List<Book> FindAll()
         {
-            return _context.Persons.ToList();
+            return _context.Books.ToList();
         }
 
         private long IncrementAndGet()
@@ -72,16 +72,16 @@ namespace EstudoRest.Repository.Implementations
             return Interlocked.Increment(ref count);
         }
 
-        public Person FindById(long id)
+        public Book FindById(long id)
         {
-            return _context.Persons.SingleOrDefault(p  => p.Id.Equals(id));
+            return _context.Books.SingleOrDefault(p  => p.Id.Equals(id));
         }
 
-        public Person Update(Person person)
+        public Book Update(Book Book)
         {
-            if (!Exists(person.Id)) return null; 
+            if (!Exists(Book.Id)) return null; 
 
-            var result = _context.Persons.SingleOrDefault(p => p.Id.Equals(person.Id));
+            var result = _context.Books.SingleOrDefault(p => p.Id.Equals(Book.Id));
 
             if (result != null)
             {
@@ -90,7 +90,7 @@ namespace EstudoRest.Repository.Implementations
                 try
                 {
 
-                    _context.Entry(result).CurrentValues.SetValues(person);
+                    _context.Entry(result).CurrentValues.SetValues(Book);
 
                     _context.SaveChanges();
 
@@ -102,13 +102,13 @@ namespace EstudoRest.Repository.Implementations
                 }
             }
 
-            return person;
+            return Book;
 
         }
 
         public bool Exists(long id )
         {
-            return _context.Persons.Any(p => p.Id.Equals(id));
+            return _context.Books.Any(p => p.Id.Equals(id));
         }
     }
 }

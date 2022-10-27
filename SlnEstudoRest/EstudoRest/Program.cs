@@ -41,13 +41,14 @@ builder.Services.AddApiVersioning();
 //Scopo da API
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+builder.Services.AddScoped<IBookRepository, BookRepositoryImplementation>();
 
 
 void MigrateDatabase(string connection)
 {
     try
     {
-        //validar o q fiz aqui, não sei se ficou certo.
         var evolveConnection = new MySqlConnection(connection);
         var evolve = new Evolve.Evolve(evolveConnection, msg => Log.Information(msg))
         {
