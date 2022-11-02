@@ -1,6 +1,7 @@
 ﻿using EstudoRest.Model;
 using EstudoRest.Business;
 using Microsoft.AspNetCore.Mvc;
+using EstudoRest.Data.VO;
 
 namespace EstudoRest.Controllers
 {
@@ -43,7 +44,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Person person)
+        public IActionResult Post([FromBody] PersonVO person)
         {
 
             if (person == null) return BadRequest();
@@ -53,7 +54,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpPut]
-        public IActionResult Put([FromBody] Person person)
+        public IActionResult Put([FromBody] PersonVO person)
         {
 
             if (person == null) return BadRequest();

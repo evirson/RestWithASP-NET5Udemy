@@ -7,11 +7,11 @@ namespace EstudoRest.Repository
     {
         T Create(T item);
 
-        Person FindById(long id);
+        T FindById(long id);
 
         List<T> FindAll();
 
-        Person Update(T item);
+        T Update(T item);
 
         void Delete(long id);
 

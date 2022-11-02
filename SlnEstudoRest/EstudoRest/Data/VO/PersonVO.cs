@@ -1,0 +1,20 @@
+﻿using System.Text.Json.Serialization;
+
+namespace EstudoRest.Data.VO
+{
+    public class PersonVO 
+    {
+        [JsonPropertyName("Code")]
+        public long Id { get; set; }
+        [JsonPropertyName("Primeiro_Nome")]
+        public string FirstName { get; set; }
+        [JsonPropertyName("Ultimo_Nome")]
+        public string LastName { get; set; }
+        [JsonIgnore]
+        public string Address { get; set; }
+        [JsonPropertyName("Sexo")]
+        public string Gender { get; set; }
+
+
+    }
+}

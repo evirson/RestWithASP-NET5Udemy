@@ -3,17 +3,10 @@ using EstudoRest.Business;
 using EstudoRest.Business.Implementations;
 using Microsoft.EntityFrameworkCore;
 using EstudoRest.Repository;
-using EstudoRest.Repository.Implementations;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System.Data.Common;
 using MySqlConnector;
+using EstudoRest.Repository.Generic;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,15 +27,22 @@ if (builder.Environment.IsDevelopment())
     MigrateDatabase(connection);
 }
 
+// opção de ser consumida via XML também
+builder.Services.AddMvc(options =>
+{
+    options.RespectBrowserAcceptHeader = true;
+    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+    options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+}).AddXmlSerializerFormatters();
 
 //versioning api
 builder.Services.AddApiVersioning();
 
 //Scopo da API
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-builder.Services.AddScoped<IBookRepository, BookRepositoryImplementation>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
 
 void MigrateDatabase(string connection)

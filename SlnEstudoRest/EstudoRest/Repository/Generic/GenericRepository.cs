@@ -51,22 +51,42 @@ namespace EstudoRest.Repository.Generic
 
         public bool Exists(long id)
         {
-            throw new NotImplementedException();
+            return dataset.Any(p => p.Id.Equals(id));   
         }
 
         public List<T> FindAll()
         {
-            throw new NotImplementedException();
+            return  dataset.ToList();
         }
 
-        public Person FindById(long id)
+        public T FindById(long id)
         {
-            throw new NotImplementedException();
+            return dataset.SingleOrDefault(p => p.Id.Equals(id));
         }
 
-        public Person Update(T item)
+        public T Update(T item)
         {
-            throw new NotImplementedException();
+            var result = dataset.SingleOrDefault(p => p.Id.Equals(item.Id));
+            if (result != null)
+            {
+                try
+                {
+                    _context.Entry(result).CurrentValues.SetValues(item);
+                    _context.SaveChanges();
+
+                    return result;
+                    
+                }
+                catch(Exception)
+                {
+                    throw;
+                }
+            }
+            else
+            {
+                return null;
+            }
+            
         }
     }
 }

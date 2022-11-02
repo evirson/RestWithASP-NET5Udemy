@@ -4,13 +4,13 @@ namespace EstudoRest.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book Book);
+        BookVO Create(BookVO Book);
 
-        Book FindById(long id);
+        BookVO FindById(long id);
 
-        List<Book> FindAll();
+        List<BookVO> FindAll();
 
-        Book Update(Book Book);
+        BookVO Update(BookVO Book);
 
         void Delete(long id);
 

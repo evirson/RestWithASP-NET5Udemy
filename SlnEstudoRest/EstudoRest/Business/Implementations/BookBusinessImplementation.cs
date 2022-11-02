@@ -1,4 +1,6 @@
-﻿using EstudoRest.Model;
+﻿using EstudoRest.Data.Converter.Implementations;
+using EstudoRest.Data.VO;
+using EstudoRest.Model;
 using EstudoRest.Model.Context;
 using EstudoRest.Repository;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -8,18 +10,23 @@ namespace EstudoRest.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {
-        private readonly IBookRepository _repository;
+        private readonly IRepository<Book> _repository;
+        private readonly BookConverter _converter;
 
-       
-        public BookBusinessImplementation(IBookRepository repository)
+
+
+        public BookBusinessImplementation(IRepository<Book> repository)
         {
             _repository = repository;
+            _converter = new BookConverter();
 
         }
 
-        public Book Create(Book book)
+        public BookVO Create(BookVO book)
         {
-             return _repository.Create(book);
+            var bookEntity = _converter.Parse(book);
+            bookEntity = _repository.Create(bookEntity);
+            return _converter.Parse(bookEntity);
         }
 
         public void Delete(long id)
@@ -29,21 +36,23 @@ namespace EstudoRest.Business.Implementations
 
         }
 
-        public List<Book> FindAll()
+        public List<BookVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.Parse(_repository.FindAll());
         }
 
 
-        public Book FindById(long id)
+        public BookVO FindById(long id)
         {
-            return _repository.FindById(id); 
+            return _converter.Parse(_repository.FindById(id));
         }
 
-        public Book Update(Book book)
+        public BookVO Update(BookVO book)
         {
 
-            return _repository.Update(book);
+            var personEntity = _converter.Parse(book);
+            personEntity = _repository.Update(personEntity);
+            return _converter.Parse(personEntity);
 
         }
     }
