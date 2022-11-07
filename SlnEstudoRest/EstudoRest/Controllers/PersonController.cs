@@ -2,6 +2,7 @@
 using EstudoRest.Business;
 using Microsoft.AspNetCore.Mvc;
 using EstudoRest.Data.VO;
+using EstudoRest.HyperMedia.Filters;
 
 namespace EstudoRest.Controllers
 {
@@ -23,6 +24,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult GetAll()
         {
 
@@ -32,6 +34,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult GetId(long id)
         {
 
@@ -44,6 +47,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonVO person)
         {
 
@@ -54,6 +58,7 @@ namespace EstudoRest.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonVO person)
         {
 

@@ -7,6 +7,10 @@ using Serilog;
 using MySqlConnector;
 using EstudoRest.Repository.Generic;
 using Microsoft.Net.Http.Headers;
+using EstudoRest.HyperMedia.Filters;
+using EstudoRest.HyperMedia.Enricher;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,12 +35,33 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddMvc(options =>
 {
     options.RespectBrowserAcceptHeader = true;
-    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
     options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json"));
+    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
 }).AddXmlSerializerFormatters();
+
+var filterOptions = new HyperMediaFilterOptions();
+
+filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+
+builder.Services.AddSingleton(filterOptions);
 
 //versioning api
 builder.Services.AddApiVersioning();
+
+//swagger
+builder.Services.AddSwaggerGen(c => c.SwaggerDoc(
+    "v1", new OpenApiInfo
+    {
+        Title = "REST API´s 0 to Azure ASP.NET Core 6 and Docker",
+        Version = "v1",
+        Description = "API RESTfull developed in course REST API´s 0 to Azure ASP.NET Core 6 and Docker",
+        Contact = new OpenApiContact
+        {
+            Name = "Evirson Firoilo",
+            Url = new Uri("https://github.com/evirson")
+        }
+    }));
 
 //Scopo da API
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
@@ -73,5 +98,22 @@ var app = builder.Build();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
+
+/*Configurações de Swagger */
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API´s 0 to Azure ASP.NET Core 6 and Docker - v1");
+});
+
+var option = new RewriteOptions();
+
+option.AddRedirect("^$", "swagger");
+
+app.UseRewriter(option);
+/*Fim Configurações de Swagger */
 
 app.Run();

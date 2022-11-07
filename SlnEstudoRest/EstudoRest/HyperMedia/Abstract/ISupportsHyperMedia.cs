@@ -1,6 +1,6 @@
 ﻿namespace EstudoRest.HyperMedia.Abstract
 {
-    public interface ISuportHyperMedia
+    public interface ISupportsHyperMedia
     {
         List<HyperMediaLink> Links { get; set; }
     }

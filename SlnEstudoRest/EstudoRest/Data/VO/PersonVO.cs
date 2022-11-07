@@ -1,8 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using EstudoRest.HyperMedia;
+using EstudoRest.HyperMedia.Abstract;
+using System.Text.Json.Serialization;
 
 namespace EstudoRest.Data.VO
 {
-    public class PersonVO 
+    public class PersonVO : ISupportsHyperMedia
+
     {
         [JsonPropertyName("Code")]
         public long Id { get; set; }
@@ -14,7 +17,6 @@ namespace EstudoRest.Data.VO
         public string Address { get; set; }
         [JsonPropertyName("Sexo")]
         public string Gender { get; set; }
-
-
+        public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }
