@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EstudoRest.Model
 {
-    [Table("books")]
+    [Table("book")]
     public class Book :BaseEntity
      {
         [Column("author")] 

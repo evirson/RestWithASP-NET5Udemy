@@ -18,13 +18,10 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
 
-
 // Add services to the container.
-
 builder.Services.AddControllers();
 
-//var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
-var connection = builder.Configuration["MySQLConnection:MySQLConnectionString1"];
+var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 
 
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
@@ -48,6 +45,15 @@ filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
 filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
 
 builder.Services.AddSingleton(filterOptions);
+
+//Configure CORS    
+builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
+{
+    builder.AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader();
+}));
+
 
 //versioning api
 builder.Services.AddApiVersioning();
@@ -89,7 +95,7 @@ void MigrateDatabase(string connection)
     catch (Exception ex)
     {
         Log.Error("Database migration Failed", ex);
-        throw;
+        //throw;
     }
 }
 
@@ -103,6 +109,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
+
 
 /*Configurações de Swagger */
 app.UseSwagger();
@@ -118,5 +125,8 @@ option.AddRedirect("^$", "swagger");
 
 app.UseRewriter(option);
 /*Fim Configurações de Swagger */
+
+//habilitando CORS - Cross Origin Resource Sharing 
+app.UseCors();
 
 app.Run();

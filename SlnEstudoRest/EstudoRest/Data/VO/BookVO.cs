@@ -12,6 +12,6 @@ namespace EstudoRest.Model
         public DateTime Launch_Date { get; set; }
         public float Price { get; set; }
         public string Title { get; set; }
-        public List<HyperMediaLink> Links { get; set; }
+        public List<HyperMediaLink> Links { get; set; } = new List<HyperMediaLink>();
     }
 }

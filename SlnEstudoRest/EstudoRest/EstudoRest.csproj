@@ -7,10 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="NovaPasta\**" />
-    <Content Remove="NovaPasta\**" />
-    <EmbeddedResource Remove="NovaPasta\**" />
-    <None Remove="NovaPasta\**" />
+    <None Remove="db\migrations\Person.txt" />
   </ItemGroup>
 
   <ItemGroup>

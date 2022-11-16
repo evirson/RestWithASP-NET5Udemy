@@ -11,7 +11,7 @@ namespace EstudoRest.HyperMedia.Enricher
         private readonly object _lock = new object();
         protected override Task EnrichModel(BookVO content, IUrlHelper urlHelper)
         {
-            var path = "api/books/v1";
+            var path = "api/book/v1";
             string link = getLink(content.Id, urlHelper, path);
 
             content.Links.Add(new HyperMediaLink()
