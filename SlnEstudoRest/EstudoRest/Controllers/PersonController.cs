@@ -3,13 +3,16 @@ using EstudoRest.Business;
 using Microsoft.AspNetCore.Mvc;
 using EstudoRest.Data.VO;
 using EstudoRest.HyperMedia.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EstudoRest.Controllers
 {
 
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
+    
     public class PersonController : ControllerBase
     {
 

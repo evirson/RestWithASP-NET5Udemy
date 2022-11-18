@@ -11,6 +11,15 @@ using EstudoRest.HyperMedia.Filters;
 using EstudoRest.HyperMedia.Enricher;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Rewrite;
+using EstudoRest.Services;
+using EstudoRest.Configurations;
+using Microsoft.Extensions.Options;
+using System.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using EstudoRest.Services.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,13 +32,13 @@ builder.Services.AddControllers();
 
 var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 
-
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
 if (builder.Environment.IsDevelopment())
 {
     MigrateDatabase(connection);
 }
+
 
 // opção de ser consumida via XML também
 builder.Services.AddMvc(options =>
@@ -45,6 +54,8 @@ filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
 filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
 
 builder.Services.AddSingleton(filterOptions);
+
+   
 
 //Configure CORS    
 builder.Services.AddCors(options => options.AddDefaultPolicy(builder =>
@@ -75,8 +86,13 @@ builder.Services.AddSwaggerGen(c => c.SwaggerDoc(
 //Scopo da API
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
 builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
+builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+
+builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
 
 
 void MigrateDatabase(string connection)
@@ -99,6 +115,39 @@ void MigrateDatabase(string connection)
     }
 }
 
+//Configurations Tokens
+var tokenConfigurations = new TokenConfiguration();
+
+new ConfigureFromConfigurationOptions<TokenConfiguration>(builder.Configuration.GetSection("TokenConfigurations")).Configure(tokenConfigurations);
+
+builder.Services.AddSingleton(tokenConfigurations);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = tokenConfigurations.Issuer,
+        ValidAudience = tokenConfigurations.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
+
+    };
+
+});
+
+builder.Services.AddAuthorization(auth =>
+{
+    auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+        .RequireAuthenticatedUser().Build());
+
+});
 
 var app = builder.Build();
 

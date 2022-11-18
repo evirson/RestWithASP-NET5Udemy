@@ -49,7 +49,7 @@ namespace EstudoRest.Repository
 
         public bool Exists(long id)
         {
-            return dataset.Any(p => p.Id.Equals(id));   
+            return _context.Users.Any(p => p.Id.Equals(id));   
         }
         private string ComputeHash(string input, SHA256CryptoServiceProvider algorithm)
         {
