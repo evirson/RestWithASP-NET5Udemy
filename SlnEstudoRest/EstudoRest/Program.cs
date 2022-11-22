@@ -30,7 +30,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 // Add services to the container.
 builder.Services.AddControllers();
 
-var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
+var connection = builder.Configuration["MySQLConnection:MySQLConnectionString1"];
 
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 

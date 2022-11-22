@@ -1,8 +1,8 @@
 ﻿namespace EstudoRest.Data.VO
 {
-    public class TokenVo
+    public class TokenVO
     {
-        public TokenVo(bool authenticated, string created, string expiration, string accessToken, string refreshToken)
+        public TokenVO(bool authenticated, string created, string expiration, string accessToken, string refreshToken)
         {
             Authenticated = authenticated;
             Created = created;

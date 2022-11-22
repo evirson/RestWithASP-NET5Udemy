@@ -4,7 +4,9 @@ namespace EstudoRest.Business
 {
     public interface ILoginBusiness
     {
-        TokenVo ValidateCredentials(UserVO user);
-                
+        TokenVO ValidateCredentials(UserVO user);
+
+        TokenVO ValidateCredentials(TokenVO token);
+
     }
 }

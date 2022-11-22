@@ -59,5 +59,10 @@ namespace EstudoRest.Repository
 
             return BitConverter.ToString(hashedBytes);
         }
+
+        public User ValidateCredentials(string username)
+        {
+            return _context.Users.SingleOrDefault(u => u.Id.Equals(User.UserName == username));
+        }
     }
 }
