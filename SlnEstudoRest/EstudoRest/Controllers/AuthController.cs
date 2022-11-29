@@ -1,5 +1,7 @@
 ﻿using EstudoRest.Business;
 using EstudoRest.Data.VO;
+using EstudoRest.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,11 +25,44 @@ namespace EstudoRest.Controllers
         {
             if (user == null) return BadRequest("Invalid Client Request");
 
-            var token = _loginBusiness.ValidateCredentials(user); 
+            var token = _loginBusiness.ValidateCredentials(user);
 
             if (token == null) return Unauthorized();
 
             return Ok(token);
         }
+
+        [HttpPost]
+        [Route("refresh")]
+        public IActionResult Refresh([FromBody] TokenVO tokenVo)
+        {
+            if (tokenVo == null) return BadRequest("Invalid Client Request");
+
+            var token = _loginBusiness.ValidateCredentials(tokenVo);
+
+            if (token == null) return BadRequest("Invalid Client Request");
+
+            return Ok(token);
+
+
+        }
+
+        [HttpGet]
+        [Route("revoke")]
+        [Authorize("Bearear")]
+        public IActionResult Revoke()
+        {
+
+            var username = User.Identity.Name;
+            
+            var result = _loginBusiness.RevokeToken(username);
+
+            if (!result) return BadRequest("Invalid Client Request");
+            
+            return NoContent();
+
+
+        }
     }
+
 }

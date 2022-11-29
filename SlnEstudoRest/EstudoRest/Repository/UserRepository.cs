@@ -62,7 +62,21 @@ namespace EstudoRest.Repository
 
         public User ValidateCredentials(string username)
         {
-            return _context.Users.SingleOrDefault(u => u.Id.Equals(User.UserName == username));
+            return _context.Users.SingleOrDefault(u => (u.UserName == username));
+        }
+
+        public bool RevokeToken(string username)
+        {
+            var user = _context.Users.SingleOrDefault(u => (u.UserName == username));
+
+            if (user is null) return false;
+
+            user.RefreshToken = null;
+
+            _context.SaveChanges();
+
+            return true;
+
         }
     }
 }

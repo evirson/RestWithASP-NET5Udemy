@@ -15,5 +15,9 @@ namespace EstudoRest.Business
 
         void Delete(long id);
 
+        PersonVO Disable(long id);
+
+        List<PersonVO> FindByName(string firstName, string secondName);
+
     }
 }

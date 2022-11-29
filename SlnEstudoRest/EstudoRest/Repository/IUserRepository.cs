@@ -11,5 +11,7 @@ namespace EstudoRest.Repository
         
         User RefreshUserInfo(User user);
 
+        bool RevokeToken(string username);
+
     }
 }

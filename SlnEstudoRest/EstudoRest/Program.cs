@@ -30,7 +30,7 @@ Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 // Add services to the container.
 builder.Services.AddControllers();
 
-var connection = builder.Configuration["MySQLConnection:MySQLConnectionString1"];
+var connection = builder.Configuration["MySQLConnection:MySQLConnectionString"];
 
 builder.Services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
@@ -90,8 +90,10 @@ builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
 
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
 
 
 

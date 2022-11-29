@@ -85,5 +85,12 @@ namespace EstudoRest.Business.Implementations
 
 
         }
+
+        public bool RevokeToken(string username)
+        {
+            
+            return _repository.RevokeToken(username);
+
+        }
     }
 }
