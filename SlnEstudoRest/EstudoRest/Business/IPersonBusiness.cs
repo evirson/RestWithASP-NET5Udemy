@@ -1,4 +1,5 @@
 ﻿using EstudoRest.Data.VO;
+using EstudoRest.HyperMedia.Utils;
 using EstudoRest.Model;
 
 namespace EstudoRest.Business
@@ -18,6 +19,8 @@ namespace EstudoRest.Business
         PersonVO Disable(long id);
 
         List<PersonVO> FindByName(string firstName, string secondName);
+
+        PagedSearchVO<PersonVO> FindWithPagedSearch(string name, string sortDirection, int pageSize, int currentPage);
 
     }
 }
