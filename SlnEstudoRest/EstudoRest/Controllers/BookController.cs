@@ -3,6 +3,7 @@ using EstudoRest.Business;
 using Microsoft.AspNetCore.Mvc;
 using EstudoRest.HyperMedia.Filters;
 using Microsoft.AspNetCore.Authorization;
+using EstudoRest.Data.VO;
 
 namespace EstudoRest.Controllers
 {
@@ -22,6 +23,24 @@ namespace EstudoRest.Controllers
             _logger = logger;
 
             _bookBusiness = bookBusiness;
+        }
+
+        [HttpGet("{sortDirection}/{pageSize}/{page}")]
+        [ProducesResponseType((200), Type = typeof(List<BookVO>))]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(402)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Get(
+            [FromQuery] string? title,
+            string sortDirection,
+            int pageSize,
+            int page)
+        {
+
+            return Ok(_bookBusiness.FindWithPagedSearch(title, sortDirection, pageSize, page));
+
         }
 
         [HttpGet]

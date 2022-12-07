@@ -1,4 +1,6 @@
-﻿using EstudoRest.Model;
+﻿using EstudoRest.Data.VO;
+using EstudoRest.HyperMedia.Utils;
+using EstudoRest.Model;
 
 namespace EstudoRest.Business
 {
@@ -13,6 +15,8 @@ namespace EstudoRest.Business
         BookVO Update(BookVO Book);
 
         void Delete(long id);
+
+        PagedSearchVO<BookVO> FindWithPagedSearch(string name, string sortDirection, int pageSize, int currentPage);
 
     }
 }

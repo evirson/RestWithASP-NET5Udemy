@@ -3,7 +3,7 @@ using EstudoRest.Model;
 
 namespace EstudoRest.Repository
 {
-    public interface IUserRepository
+    public interface IUserRepository 
     {
         User ValidateCredentials(UserVO user);
 
