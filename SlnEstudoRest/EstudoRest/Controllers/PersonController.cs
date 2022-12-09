@@ -101,7 +101,7 @@ namespace EstudoRest.Controllers
 
             if (person == null) return BadRequest();
 
-            return Ok(_personBusiness.Create(person));
+            return Ok(_personBusiness.Update(person));
 
         }
 

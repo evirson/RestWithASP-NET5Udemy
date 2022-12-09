@@ -7,6 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Business\ICadGruBusiness.cs" />
+    <Compile Remove="Business\Implementations\CadGruBusinessImplementation.cs" />
+    <Compile Remove="Controllers\CadGruController.cs" />
+    <Compile Remove="Data\Converter\Implementations\CadGruConverter.cs" />
+    <Compile Remove="Data\VO\CadGruVO.cs" />
+    <Compile Remove="HyperMedia\Enricher\CadGruEnricher.cs" />
+    <Compile Remove="Model\CadGru.cs" />
+    <Compile Remove="Repository\CadGruRepository.cs" />
+    <Compile Remove="Repository\ICadGruRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="db\migrations\Person.txt" />
     <None Remove="UploadDir\MOCK_DATA.csv" />
   </ItemGroup>

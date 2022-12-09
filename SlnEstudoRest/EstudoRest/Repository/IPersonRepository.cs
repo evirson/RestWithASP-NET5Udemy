@@ -3,7 +3,7 @@ using EstudoRest.Model;
 
 namespace EstudoRest.Repository
 {
-    public interface IPersonRepository : IRepository<Person>
+    public interface IPersonRepository : IGenericRepository<Person>
     {
         Person Disable(long id);
 

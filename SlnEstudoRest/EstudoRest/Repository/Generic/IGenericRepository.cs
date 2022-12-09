@@ -3,7 +3,7 @@ using EstudoRest.Model.Base;
 
 namespace EstudoRest.Repository
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IGenericRepository<T> where T : BaseEntity
     {
         T Create(T item);
 

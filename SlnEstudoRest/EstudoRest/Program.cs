@@ -79,7 +79,7 @@ builder.Services.AddSwaggerGen(c => c.SwaggerDoc(
         Description = "API RESTfull developed in course REST API´s 0 to Azure ASP.NET Core 6 and Docker",
         Contact = new OpenApiContact
         {
-            Name = "Evirson Firoilo",
+            Name = "Evirson Fiorilo",
             Url = new Uri("https://github.com/evirson")
         }
     }));
@@ -94,12 +94,12 @@ builder.Services.AddScoped<IBookBusiness, BookBusinessImplementation>();
 builder.Services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
 builder.Services.AddScoped<IFileBusiness, FileBusinessImplementation>();
 
+
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
-builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
 
 

@@ -84,7 +84,7 @@ namespace EstudoRest.Controllers
 
             if (book == null) return BadRequest();
 
-            return Ok(_bookBusiness.Create(book));
+            return Ok(_bookBusiness.Update(book));
 
         }
 

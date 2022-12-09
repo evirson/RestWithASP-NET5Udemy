@@ -11,12 +11,12 @@ namespace EstudoRest.Business.Implementations
 {
     public class BookBusinessImplementation : IBookBusiness
     {
-        private readonly IRepository<Book> _repository;
+        private readonly IGenericRepository<Book> _repository;
         private readonly BookConverter _converter;
 
 
 
-        public BookBusinessImplementation(IRepository<Book> repository)
+        public BookBusinessImplementation(IGenericRepository<Book> repository)
         {
             _repository = repository;
             _converter = new BookConverter();
